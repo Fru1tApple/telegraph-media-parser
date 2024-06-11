@@ -1,0 +1,14 @@
+[tool.poetry]
+name = "media-parser"
+version = "0.1.0"
+description = "Simple Telegra.ph media parser"
+authors = ["FruitApple"]
+
+[tool.poetry.dependencies]
+python = "^3.12"
+tuparser = "^0.1.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
