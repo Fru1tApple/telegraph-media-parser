@@ -4,14 +4,12 @@ from tuparser import TelegraphParser, FileManager, Config, TELEGRAPH_URL, run_pa
 
 
 class MediaParser(TelegraphParser):
-    def __init__(self, config):
-        super().__init__(config)
+    async def parse(self, url, soup):
         self.main_output_folder = 'parser-output'
         self.output_folder = 'media'
         self.images_folder = 'images'
         self.videos_folder = 'videos'
 
-    async def parse(self, url, soup):
         folder_url = url[19:]
 
         images = self.get_urls(soup.find_all('img'))

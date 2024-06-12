@@ -1,5 +1,6 @@
-*out*
-*poetry*
-*cache*
-*env*
 .vscode
+*env*
+*cache*
+*ruff*
+*poetry*
+*out*
