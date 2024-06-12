@@ -1,3 +1,0 @@
-exclude = [
-    media_parser.py
-]
