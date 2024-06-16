@@ -1,14 +1,14 @@
-import aiohttp
+from aiohttp.client_exceptions import ClientConnectorError
 
-from tuparser import TelegraphParser, FileManager, Config, TELEGRAPH_URL, run_parser
+from tuparser import TelegraphParser, FileManager, TELEGRAPH_URL, run_parser
 
 
 class MediaParser(TelegraphParser):
     async def parse(self, url, soup):
-        self.main_output_folder = 'parser-output'
+        self.main_output_folder = 'output'
         self.output_folder = 'media'
-        self.images_folder = 'images'
-        self.videos_folder = 'videos'
+        images_folder = 'images'
+        videos_folder = 'videos'
 
         folder_url = url[19:]
 
@@ -16,9 +16,9 @@ class MediaParser(TelegraphParser):
         videos = self.get_urls(soup.find_all('video'))
 
         if images:
-            await self.download_media(images, self.images_folder, folder_url, 'gif')
+            await self.download_media(images, images_folder, folder_url, 'gif')
         if videos:
-            await self.download_media(videos, self.videos_folder, folder_url, 'mp4')
+            await self.download_media(videos, videos_folder, folder_url, 'mp4')
 
     async def download_media(self, media, main_folder, folder, file_extension):
         media_folder_path = FileManager.join_paths(
@@ -36,8 +36,8 @@ class MediaParser(TelegraphParser):
                     media_file_path = FileManager.join_paths(
                         media_folder_path, media_file_name
                     )
-                    FileManager.save_file(media_file_path, await response.read())
-            except aiohttp.client_exceptions.ClientConnectorError:
+                    FileManager.dump_binary_data(media_file_path, await response.read())
+            except ClientConnectorError:
                 continue
 
     def get_urls(self, media):
@@ -48,4 +48,4 @@ class MediaParser(TelegraphParser):
         ]
 
 
-run_parser(config_class=Config, parser_class=MediaParser)
+run_parser(MediaParser)
