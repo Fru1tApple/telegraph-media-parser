@@ -5,21 +5,21 @@ from tuparser import TelegraphParser, FileManager, TELEGRAPH_URL, run_parser
 
 class MediaParser(TelegraphParser):
     async def parse(self, url, soup):
-        folder_url = url.split("/")[-1]
+        self.folder_url = url.split("/")[-1]
         images = self.get_urls(soup.find_all("img"))
         videos = self.get_urls(soup.find_all("video"))
 
         if images:
-            await self.download_media(images, "images", folder_url, "gif")
+            await self.download_media(images, "images", "gif")
         if videos:
-            await self.download_media(videos, "videos", folder_url, "mp4")
+            await self.download_media(videos, "videos", "mp4")
 
-    async def download_media(self, media, main_folder, folder, file_extension):
+    async def download_media(self, media, media_category, file_extension):
         media_folder_path = FileManager.join_paths(
             "output",
             "media",
-            main_folder,
-            folder,
+            media_category,
+            self.folder_url,
         )
         FileManager.create_folder(media_folder_path)
 

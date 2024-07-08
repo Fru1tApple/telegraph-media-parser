@@ -6,7 +6,7 @@ authors = ["FruitApple"]
 
 [tool.poetry.dependencies]
 python = "^3.12"
-tuparser = "^0.1.5.3"
+tuparser = "^0.1.5.4"
 
 
 [build-system]
