@@ -1,12 +1,12 @@
 [tool.poetry]
 name = "media-parser"
-version = "0.1.2"
+version = "0.1.3"
 description = "Simple Telegraph media parser"
 authors = ["FruitApple"]
 
 [tool.poetry.dependencies]
 python = "^3.12"
-tuparser = "^0.1.5"
+tuparser = "^0.1.5.3"
 
 
 [build-system]
