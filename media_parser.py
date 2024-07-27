@@ -23,8 +23,7 @@ class MediaParser(TelegraphParser):
         for i, url in enumerate(media):
             try:
                 async with self.session.get(url) as response:
-                    media_file_name = f'{i + 1}.{file_extension}'
-                    media_file_path = path.join(media_folder_path, media_file_name)
+                    media_file_path = path.join(media_folder_path, f'{i + 1}.{file_extension}')
                     with open(media_file_path, 'wb') as file:
                         file.write(await response.read())
             except ClientConnectorError:
