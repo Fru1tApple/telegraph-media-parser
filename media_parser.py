@@ -16,6 +16,13 @@ class MediaParser(TelegraphParser):
         if videos:
             await self.download_media(videos, 'videos', 'mp4')
 
+    def get_urls(self, media):
+        return [
+            TELEGRAPH_URL + value.get('src')
+            for value in media
+            if not value.get('src').startswith('http')
+        ]
+
     async def download_media(self, media, media_category, file_extension):
         media_folder_path = path.join('output', 'media', media_category, self.article)
         makedirs(media_folder_path, exist_ok=True)
@@ -29,12 +36,5 @@ class MediaParser(TelegraphParser):
             except ClientConnectorError:
                 ...
 
-    def get_urls(self, media):
-        return [
-            TELEGRAPH_URL + value.get('src')
-            for value in media
-            if not value.get('src').startswith('http')
-        ]
 
-
-run_parser(MediaParser, titles=['PLACEHOLDER'])
+run_parser(MediaParser, titles=[''])
